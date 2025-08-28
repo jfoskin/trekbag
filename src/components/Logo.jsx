@@ -1,3 +1,3 @@
 export default function Logo() {
-	return <button>hey</button>;
+	return <img src="https://bytegrad.com/course-assets/react-nextjs/dots.png" />;
 }

@@ -2,7 +2,8 @@ export default function ItemList() {
 	return (
 		<div>
 			<section>
-				<input />
+				<input type="checkbox" />
+				<label>Item Added</label>
 			</section>
 		</div>
 	);
