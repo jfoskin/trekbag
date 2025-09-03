@@ -1,6 +1,4 @@
-import { ITEMS } from "../lib/constants.js";
-
-export default function ItemList() {
+export default function ItemList({ items }) {
 	return (
 		<div>
 			<section>
@@ -11,7 +9,7 @@ export default function ItemList() {
 				</select>
 			</section>
 			<ul>
-				{ITEMS.map((item) => {
+				{items.map((item) => {
 					return <Item key={item.name} item={item} />;
 				})}
 			</ul>
@@ -25,6 +23,9 @@ function Item({ item }) {
 			<label>
 				<input type="checkbox" /> {item.name}
 			</label>
+			<button className="remove-btn" aria-label={`Remove ${item.name}`}>
+				❌
+			</button>
 		</li>
 	);
 }
