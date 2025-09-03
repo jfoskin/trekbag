@@ -10,7 +10,7 @@ export default function ItemList({ items }) {
 			</section>
 			<ul>
 				{items.map((item) => {
-					return <Item key={item.name} item={item} />;
+					return <Item key={item.id} item={item} />;
 				})}
 			</ul>
 		</div>
