@@ -8,17 +8,28 @@ export default function ButtonGroup({
 	handleMarkAllAsComplete,
 	handleMarkAllAsIncomplete,
 }) {
+	const secondaryBtnActions = [
+		{ text: "Mark all as complete", onClick: handleMarkAllAsComplete },
+		{ text: "Mark all as incomplete", onClick: handleMarkAllAsIncomplete },
+		{ text: "Reset to Initial", onClick: handleResetToInitialItems },
+		{ text: "Remove all items", onClick: handleRemovingAllItems },
+	];
+
 	return (
 		<section className="button-group">
-			{/* {secondaryBtns.map((secondaryText) => {
+			{secondaryBtnActions.map((secondaryBtnAction) => {
 				// console.log([]);
 				return (
-					<Button key={secondaryText} type="secondary">
-						{secondaryText}
+					<Button
+						key={secondaryBtnAction.text}
+						type="secondary"
+						onClick={secondaryBtnAction.onClick}
+					>
+						{secondaryBtnAction.text}
 					</Button>
 				);
-			})} */}
-			<Button onClick={handleMarkAllAsComplete} buttonType="secondary">
+			})}
+			{/* <Button onClick={handleMarkAllAsComplete} buttonType="secondary">
 				Mark all as complete
 			</Button>
 			<Button onClick={handleMarkAllAsIncomplete} buttonType="secondary">
@@ -29,7 +40,7 @@ export default function ButtonGroup({
 			</Button>
 			<Button onClick={handleRemovingAllItems} buttonType="secondary">
 				Remove all items
-			</Button>
+			</Button> */}
 		</section>
 	);
 }

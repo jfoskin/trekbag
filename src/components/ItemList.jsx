@@ -1,4 +1,8 @@
-export default function ItemList({ items }) {
+export default function ItemList({
+	items,
+	handleDeletingAnItem,
+	handleTogglingAnItem,
+}) {
 	return (
 		<div>
 			<section>
@@ -10,20 +14,31 @@ export default function ItemList({ items }) {
 			</section>
 			<ul>
 				{items.map((item) => {
-					return <Item key={item.id} item={item} />;
+					return (
+						<Item
+							key={item.id}
+							item={item}
+							handleDeletingAnItem={handleDeletingAnItem}
+							handleTogglingAnItem={handleTogglingAnItem}
+						/>
+					);
 				})}
 			</ul>
 		</div>
 	);
 }
 
-function Item({ item }) {
+function Item({ item, handleDeletingAnItem, handleTogglingAnItem }) {
 	return (
 		<li className="item">
-			<label>
+			<label onClick={() => handleTogglingAnItem(item.id)}>
 				<input type="checkbox" checked={item.packed} /> {item.name}
 			</label>
-			<button className="remove-btn" aria-label={`Remove ${item.name}`}>
+			<button
+				className="remove-btn"
+				aria-label={`Remove ${item.name}`}
+				onClick={() => handleDeletingAnItem(item.id)}
+			>
 				❌
 			</button>
 		</li>
