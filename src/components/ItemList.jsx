@@ -1,3 +1,5 @@
+import EmptyItemView from "./EmptyItemView";
+
 export default function ItemList({
 	items,
 	handleDeletingAnItem,
@@ -13,6 +15,8 @@ export default function ItemList({
 				</select>
 			</section>
 			<ul>
+				{items.length === 0 && <EmptyItemView />}
+
 				{items.map((item) => {
 					return (
 						<Item
@@ -31,8 +35,13 @@ export default function ItemList({
 function Item({ item, handleDeletingAnItem, handleTogglingAnItem }) {
 	return (
 		<li className="item">
-			<label onClick={() => handleTogglingAnItem(item.id)}>
-				<input type="checkbox" checked={item.packed} /> {item.name}
+			<label>
+				<input
+					onChange={() => handleTogglingAnItem(item.id)}
+					type="checkbox"
+					checked={item.packed}
+				/>
+				{item.name}
 			</label>
 			<button
 				className="remove-btn"
