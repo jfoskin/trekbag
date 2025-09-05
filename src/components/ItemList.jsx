@@ -1,34 +1,55 @@
+import { useState } from "react";
+import Select from "react-select";
+
 import EmptyItemView from "./EmptyItemView";
+
+const sortingOptions = [
+	{ value: "default", label: "Sort by Default" },
+	{ value: "unpacked", label: "Sort by unpacked" },
+	{ value: "packed", label: "Sort by packed" },
+];
 
 export default function ItemList({
 	items,
 	handleDeletingAnItem,
 	handleTogglingAnItem,
 }) {
-	return (
-		<div>
-			<section>
-				<select name="cars" id="cars">
-					<option value="volvo">Sort by Default</option>
-					<option value="saab">Sort by unpacked</option>
-					<option value="mercedes">Sort by packed</option>
-				</select>
-			</section>
-			<ul>
-				{items.length === 0 && <EmptyItemView />}
+	const [sortBy, setSortBy] = useState("default");
 
-				{items.map((item) => {
-					return (
-						<Item
-							key={item.id}
-							item={item}
-							handleDeletingAnItem={handleDeletingAnItem}
-							handleTogglingAnItem={handleTogglingAnItem}
-						/>
-					);
-				})}
-			</ul>
-		</div>
+	const sortedItems = [...items].sort((a, b) => {
+		if (sortBy === "packed") {
+			return b.packed - a.packed;
+		}
+		if (sortBy === "unpacked") {
+			return a.packed - b.packed;
+		}
+		return;
+	});
+
+	return (
+		<ul className="item-list">
+			{items.length === 0 && <EmptyItemView />}
+			{items.length > 0 ? (
+				<section>
+					<Select
+						defaultValue={sortingOptions[0]}
+						options={sortingOptions}
+						onChange={(option) => setSortBy(option.value)}
+					/>
+				</section>
+			) : null}
+
+			{sortedItems.map((item) => {
+				return (
+					<Item
+						key={item.id}
+						item={item}
+						handleDeletingAnItem={handleDeletingAnItem}
+						handleTogglingAnItem={handleTogglingAnItem}
+					/>
+				);
+			})}
+		</ul>
 	);
 }
 

@@ -9,6 +9,8 @@ import { useState } from "react";
 function App() {
 	const [items, setItems] = useState(ITEMS);
 
+	const packedItems = items.filter((item) => item.packed).length;
+
 	const handleAddingAnItem = (newItemText) => {
 		const newItem = {
 			id: new Date().getTime(),
@@ -33,6 +35,7 @@ function App() {
 		});
 		setItems(newItems);
 	};
+
 	const handleRemovingAllItems = () => {
 		setItems([]);
 	};
@@ -47,6 +50,7 @@ function App() {
 		});
 		setItems(newItems);
 	};
+
 	const handleMarkAllAsIncomplete = () => {
 		const newItems = items.map((item) => {
 			return { ...item, packed: false };
@@ -58,7 +62,7 @@ function App() {
 		<>
 			<BackgroundHeading />
 			<main>
-				<Header />
+				<Header totalNumberOfItems={items.length} packedItems={packedItems} />
 				<ItemList
 					items={items}
 					handleDeletingAnItem={handleDeletingAnItem}

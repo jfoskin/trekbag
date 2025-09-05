@@ -1,7 +1,5 @@
 import Button from "./Button";
 
-import { secondaryBtns } from "../lib/constants";
-
 export default function ButtonGroup({
 	handleRemovingAllItems,
 	handleResetToInitialItems,
