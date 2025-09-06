@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import Select from "react-select";
 
 import EmptyItemView from "./EmptyItemView";
-import { useItemsContext } from "../lib/hooks";
+import { useItemsStore } from "../stores/itemsStore";
 
 const sortingOptions = [
 	{ value: "default", label: "Sort by Default" },
@@ -12,8 +12,10 @@ const sortingOptions = [
 
 export default function ItemList() {
 	const [sortBy, setSortBy] = useState("default");
-	const { items, handleDeletingAnItem, handleTogglingAnItem } =
-		useItemsContext();
+
+	const items = useItemsStore((state) => state.items);
+	const deletingAnItem = useItemsStore((state) => state.deletingAnItem);
+	const togglingAnItem = useItemsStore((state) => state.togglingAnItem);
 
 	const sortedItems = useMemo(
 		() =>
@@ -47,8 +49,8 @@ export default function ItemList() {
 					<Item
 						key={item.id}
 						item={item}
-						handleDeletingAnItem={handleDeletingAnItem}
-						handleTogglingAnItem={handleTogglingAnItem}
+						onDeletingAnItem={deletingAnItem}
+						onTogglingAnItem={togglingAnItem}
 					/>
 				);
 			})}
@@ -56,12 +58,12 @@ export default function ItemList() {
 	);
 }
 
-function Item({ item, handleDeletingAnItem, handleTogglingAnItem }) {
+function Item({ item, onDeletingAnItem, onTogglingAnItem }) {
 	return (
 		<li className="item">
 			<label>
 				<input
-					onChange={() => handleTogglingAnItem(item.id)}
+					onChange={() => onTogglingAnItem(item.id)}
 					type="checkbox"
 					checked={item.packed}
 				/>
@@ -70,7 +72,7 @@ function Item({ item, handleDeletingAnItem, handleTogglingAnItem }) {
 			<button
 				className="remove-btn"
 				aria-label={`Remove ${item.name}`}
-				onClick={() => handleDeletingAnItem(item.id)}
+				onClick={() => onDeletingAnItem(item.id)}
 			>
 				❌
 			</button>
